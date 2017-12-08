@@ -16,5 +16,24 @@ namespace RoomReservation.Repository
         {
             _db = db;
         }
+
+        public void AddRoom(Room room)
+        {
+            _db.Entry(room).State = EntityState.Added;
+            _db.SaveChanges();
+        }
+
+        public void RemoveRoom(int id)
+        {
+            Room room = _db.Room.Where(r => r.Id == id).FirstOrDefault();
+
+            _db.Entry(room).State = EntityState.Deleted;
+            _db.SaveChanges();
+        }
+
+        public IEnumerable<Room> GetAllRooms()
+        {
+            return _db.Room.ToList();
+        }
     }
 }
